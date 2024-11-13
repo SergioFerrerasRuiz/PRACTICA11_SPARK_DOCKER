@@ -78,8 +78,8 @@ Este repositorio proporciona un contenedor Docker preconfigurado para ejecutar *
    ```
    Si entreamos al navegador con la ruta: `http://localhost:8080`, veremos spark desplegado:
   ![image](https://github.com/user-attachments/assets/1c5463ba-e3d9-4c02-8868-aa48e1761150)
+>**Nota:** Si te da error en el puerto `8080`, asegurate de que se encuentre disponible, puede probar a modificarlo por `8081` o similares, si después de intentar modificar el puerto y no funciona, borra el puerto `8080:8080` en el comando anterior.
 
-## Uso del contenedor
    Ahora que tenemos instalado correctamente ya podemos usar `pyspark`, `scala` y `sql`, para ello:
 1. **Acceder al contenedor con una terminal interactiva:**
    ```bash
