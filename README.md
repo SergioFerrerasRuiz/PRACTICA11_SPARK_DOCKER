@@ -60,7 +60,7 @@ Este repositorio proporciona un contenedor Docker preconfigurado para ejecutar *
 > 
 > Realizar estas tareas de mantenimiento regularmente puede ayudarte a evitar conflictos o problemas de rendimiento en tu sistema.
 
-### Pasos para la instalación y uso del contenedor Spark
+## Instalación de Apache Spark
 
 1. **Crear una red de Docker**
 - Crearemos una red para que los contenedores se comuniquen.
@@ -72,29 +72,35 @@ Este repositorio proporciona un contenedor Docker preconfigurado para ejecutar *
    docker network ls
    ```
   Esto mostrará una lista de todas las redes disponibles en Docker. Deberías ver `spark-network` en la lista.
-2. **Ejecutar el contenedor `1spark-master:`**
+2. **Ejecutar el contenedor `spark-master:`**
    ```bash
    docker run -d --name spark-master --network spark-network -p 8080:8080 -p 7077:7077 -e SPARK_MODE=master -e SPARK_MASTER_HOST=spark-master bitnami/spark:3.2.1
    ```
-3. **Acceder al contenedor con una terminal interactiva:**
+   Si entreamos al navegador con la ruta: `http://localhost:8080`, veremos spark desplegado:
+  ![image](https://github.com/user-attachments/assets/1c5463ba-e3d9-4c02-8868-aa48e1761150)
+
+## Uso del contenedor
+   Ahora que tenemos instalado correctamente ya podemos usar `pyspark`, `scala` y `sql`, para ello:
+1. **Acceder al contenedor con una terminal interactiva:**
    ```bash
    docker exec -it spark-master /bin/bash
    ```
-4. **Iniciar PySpark:**
+2. **Iniciar PySpark:**
    ```bash
    pyspark
    ```
    Ahora tienes acceso a `pyspark`. Si quieres salir de la terminal pulsa: ctrl + d.
-5. **Iniciar Spark con Scala:**
+3. **Iniciar Spark con Scala:**
    ```bash
    spark-shell
    ```
    Ahora tienes acceso a `scala`. Si quieres salir de la terminal pulsa: ctrl + d.
-6. **Ejecutar SQL en Spark:**
+4. **Ejecutar SQL en Spark:**
    ```bash
    /opt/bitnami/spark/bin/spark-sql --master spark://spark-master:7077
    ```
    Ahora tienes acceso a `spark-sql`. Si quieres salir de la terminal pulsa: ctrl + d.
+## Finalizar
 7. **Detener el contenedor cuando hayas terminado:**
 - Detener el contenedor:
    ```bash
@@ -105,6 +111,6 @@ Este repositorio proporciona un contenedor Docker preconfigurado para ejecutar *
    docker rm spark-master
    ```
 ---
-### Conclusión
+## Conclusión
 
 Este repositorio proporciona una configuración fácil y rápida para ejecutar **Apache Spark** en un contenedor Docker, soportando lenguajes como **Scala**, **PySpark** y **SQL**. Con la configuración adecuada, puedes aprovechar el poder del procesamiento distribuido de Spark en un entorno aislado. Recuerda gestionar los contenedores y las imágenes para mantener tu sistema limpio y eficiente.
