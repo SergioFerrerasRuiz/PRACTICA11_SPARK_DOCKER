@@ -7,4 +7,104 @@ Este repositorio proporciona un contenedor Docker preconfigurado para ejecutar *
 - **Scala**: Lenguaje funcional y orientado a objetos compatible con Spark.
 - **PySpark**: Interfaz de Python para Spark, permitiendo escribir código en Python para el procesamiento distribuido.
 - **SQL**: Soporte completo para ejecutar consultas SQL sobre grandes volúmenes de datos.
+---
+### Requisitos previos
 
+1. **Docker**: Debes tener Docker instalado en tu máquina. Si no lo tienes, puedes seguir la [guía de instalación oficial de Docker](https://docs.docker.com/get-docker/).
+   
+2. **Red interna de Docker**: Asegúrate de poder crear redes internas en Docker, ya que es necesario para configurar la red entre contenedores (en este caso, para el contenedor `spark-master`).
+
+3. **Conexión a Internet**: Asegúrate de tener acceso a Internet para descargar las imágenes de Docker necesarias.
+
+4. **Espacio en disco**: Ten suficiente espacio en disco para ejecutar contenedores, ya que los contenedores de Spark pueden consumir varios gigabytes dependiendo de la carga de trabajo.
+
+
+### ⚠️ Sugerencia
+> Es recomendable apagar y eliminar contenedores o imágenes que ya no necesites para evitar conflictos o el uso innecesario de recursos del sistema. Aquí tienes algunos comandos útiles para gestionarlos:
+> 
+> - **Ver contenedores en ejecución:**
+>   ```bash
+>   docker ps
+>   ```
+> 
+> - **Detener un contenedor:**
+>   Si necesitas detener un contenedor en ejecución, puedes hacerlo con:
+>   ```bash
+>   docker stop <nombre_contenedor>
+>   ```
+> 
+> - **Eliminar un contenedor detenido:**
+>   Después de detener un contenedor, puedes eliminarlo para liberar recursos:
+>   ```bash
+>   docker rm <nombre_contenedor>
+>   ```
+> 
+> - **Ver imágenes descargadas:**
+>   Para ver las imágenes descargadas en tu sistema:
+>   ```bash
+>   docker images
+>   ```
+> 
+> - **Eliminar una imagen no utilizada:**
+>   Si ya no necesitas una imagen, puedes eliminarla para liberar espacio en disco:
+>   ```bash
+>   docker rmi <nombre_imagen>
+>   ```
+> 
+> - **Eliminar contenedores e imágenes no utilizados de forma automática:**
+>   Para eliminar todos los contenedores detenidos y las imágenes no utilizadas, puedes usar:
+>   ```bash
+>   docker system prune
+>   ```
+>   **Nota**: Este comando eliminará todo lo que no esté en uso, incluidos los contenedores detenidos, las redes no utilizadas y las imágenes no etiquetadas.
+> 
+> Realizar estas tareas de mantenimiento regularmente puede ayudarte a evitar conflictos o problemas de rendimiento en tu sistema.
+
+### Pasos para la instalación y uso del contenedor Spark
+
+1. **Crear una red de Docker**
+- Crearemos una red para que los contenedores se comuniquen.
+   ```bash
+   docker network create spark-network
+   ```
+- Confirma que la red se ha creado correctamente.
+   ```bash
+   docker network ls
+   ```
+  Esto mostrará una lista de todas las redes disponibles en Docker. Deberías ver `spark-network` en la lista.
+2. **Ejecutar el contenedor `1spark-master:`**
+   ```bash
+   docker run -d --name spark-master --network spark-network -p 8080:8080 -p 7077:7077 -e SPARK_MODE=master -e SPARK_MASTER_HOST=spark-master bitnami/spark:3.2.1
+   ```
+3. **Acceder al contenedor con una terminal interactiva:**
+   ```bash
+   docker exec -it spark-master /bin/bash
+   ```
+4. **Iniciar PySpark:**
+   ```bash
+   pyspark
+   ```
+   Ahora tienes acceso a `pyspark`. Si quieres salir de la terminal pulsa: ctrl + d.
+5. **Iniciar Spark con Scala:**
+   ```bash
+   spark-shell
+   ```
+   Ahora tienes acceso a `scala`. Si quieres salir de la terminal pulsa: ctrl + d.
+6. **Ejecutar SQL en Spark:**
+   ```bash
+   /opt/bitnami/spark/bin/spark-sql --master spark://spark-master:7077
+   ```
+   Ahora tienes acceso a `spark-sql`. Si quieres salir de la terminal pulsa: ctrl + d.
+7. **Detener el contenedor cuando hayas terminado:**
+- Detener el contenedor:
+   ```bash
+   docker stop spark-master
+   ```
+- Eliminar el contenedor:
+   ```bash
+   docker rm spark-master
+   ```
+---
+### Conclusión
+
+Este repositorio proporciona una configuración fácil y rápida para ejecutar **Apache Spark** en un contenedor Docker, soportando lenguajes como **Scala**, **PySpark** y **SQL**. Con la configuración adecuada, puedes aprovechar el poder del procesamiento distribuido de Spark en un entorno aislado. Recuerda gestionar los contenedores y las imágenes para mantener tu sistema limpio y eficiente.
