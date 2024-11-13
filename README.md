@@ -100,6 +100,24 @@ Este repositorio proporciona un contenedor Docker preconfigurado para ejecutar *
    /opt/bitnami/spark/bin/spark-sql --master spark://spark-master:7077
    ```
    Ahora tienes acceso a `spark-sql`. Si quieres salir de la terminal pulsa: ctrl + d.
+5. **Ejecutar JAVA:**
+   - Verificamos la versión de java.
+   ```bash
+   java -version
+   ```
+   - Ahora vamos a probar java con un `HelloWord`
+   ```bash
+   echo 'public class HelloWorld { public static void main(String[] args) { System.out.println("Hello, Spark and Java!"); } }' > HelloWorld.java 
+   ```
+   - Compilamos el archivo `HelloWorld`:
+   ```bash
+   javac HelloWorld.java
+   ```
+   - Ejecutamos el programa:
+   ```bash
+   java HelloWorld
+   ```
+   Ahora ya tendremos disponible java para la ejecución de nuestros programas, para salir de la terminal pulsa: ctrl + d.
 ## Finalizar
 7. **Detener el contenedor cuando hayas terminado:**
 - Detener el contenedor:
